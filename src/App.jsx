@@ -19,6 +19,14 @@ import Contabilidad from './pages/Contabilidad';
 
 function Protected({ children }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const isAuthLoading = useAuthStore((s) => s.isAuthLoading);
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <p className="text-gray-500 text-sm">Cargando…</p>
+      </div>
+    );
+  }
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
 
@@ -26,6 +34,11 @@ function AppLoader({ children }) {
   const fetchAll = useFleetStore((s) => s.fetchAll);
   const subscribeToRealtime = useFleetStore((s) => s.subscribeToRealtime);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const init = useAuthStore((s) => s.init);
+
+  useEffect(() => {
+    init();
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated) return;
