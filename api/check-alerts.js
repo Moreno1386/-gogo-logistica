@@ -1,7 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://axcdhglnkksqvsiggpvp.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4Y2RoZ2xua2tzcXZzaWdncHZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjMzNTEsImV4cCI6MjA5MzEzOTM1MX0.UE-ftdP4gRqLeCmnjEf0xlfMwuR1GQjhTXmnh7A45gc';
+// Con RLS activado, el cron necesita la llave service_role (configurada en Vercel,
+// nunca en el código). El fallback a la llave anon solo funciona sin RLS.
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4Y2RoZ2xua2tzcXZzaWdncHZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NjMzNTEsImV4cCI6MjA5MzEzOTM1MX0.UE-ftdP4gRqLeCmnjEf0xlfMwuR1GQjhTXmnh7A45gc';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
